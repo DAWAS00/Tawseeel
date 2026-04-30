@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
 
     if (mounted) {
-      Navigator.pushReplacementNamed(context, '/home'); 
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
@@ -52,21 +52,12 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 20),
 
             Text(
-              'توصيل',
-              style: GoogleFonts.cairo(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
-              ),
-            ),
-            Text(
               'Tawseel',
               style: GoogleFonts.cairo(
-                // Using the Poppins font
-                fontSize: 24,
+                fontSize: 32,
                 fontWeight: FontWeight.bold,
                 color: Colors.blueAccent,
-                letterSpacing: 1.2, // adds a litter breathing in the text
+                letterSpacing: 1.2,
               ),
             ),
             Container(
