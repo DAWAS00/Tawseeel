@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawseel/screens/splash_screen.dart';
+import 'package:tawseel/screens/homepage_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +18,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
-      routes: {'/': (context) => const SplashScreen()},
-    ); 
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/home': (context) => const HomeScreen(),
+      },
+    );
   }
 }
