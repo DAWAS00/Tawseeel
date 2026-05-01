@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tawseel/screens/login_screen.dart';
 import 'package:tawseel/screens/register_screen.dart';
 import 'package:tawseel/screens/splash_screen.dart';
-import 'package:tawseel/screens/homepage_screen.dart';
+import 'package:tawseel/screens/home/home_screen.dart';
 import 'package:tawseel/screens/forgot_password_screen.dart';
 import 'package:tawseel/screens/otp_verification_screen.dart';
 import 'package:tawseel/screens/login/merchant_login_screen.dart';
