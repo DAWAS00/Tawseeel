@@ -5,7 +5,8 @@ import 'register/register_controller.dart';
 import 'register/widgets/register_form.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final bool initialIsCustomer;
+  const RegisterScreen({super.key, this.initialIsCustomer = true});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -53,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 16),
               _screenTitle(),
               const SizedBox(height: 20),
-              RegisterForm(controller: _controller),
+              RegisterForm(controller: _controller, initialIsCustomer: widget.initialIsCustomer),
               const SizedBox(height: 24),
             ],
           ),

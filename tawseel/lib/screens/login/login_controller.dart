@@ -32,11 +32,11 @@ class LoginController {
   /// If valid, navigates to the home screen using named routes.
   void login(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      // Perform login logic here (e.g., API call)
-      print('Logging in with: ${emailController.text}');
-      
-      // Navigate to home using named route
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushNamed(
+        context,
+        '/otp-verification',
+        arguments: {'phone': emailController.text},
+      );
     }
   }
 

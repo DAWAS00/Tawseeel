@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              onPressed: () => Navigator.pushNamed(context, '/register'),
+              onPressed: () => Navigator.pushNamed(context, '/register', arguments: {'isCustomer': true}),
               child: const Text('Register Now', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary)),
             ),
             const Text("Don't have an account?", style: TextStyle(color: AppColors.textMid)),

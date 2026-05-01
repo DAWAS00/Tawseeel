@@ -96,7 +96,7 @@ class _LoginFormState extends State<LoginForm> {
     return Align(
       alignment: Alignment.centerLeft,
       child: TextButton(
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(context, '/forgot-password'),
         child: Text(
           'Forgot Password?',
           style: GoogleFonts.cairo(
