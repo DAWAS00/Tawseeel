@@ -6,6 +6,9 @@ import 'package:tawseel/screens/home/home_screen.dart';
 import 'package:tawseel/screens/forgot_password_screen.dart';
 import 'package:tawseel/screens/otp_verification_screen.dart';
 import 'package:tawseel/screens/login/merchant_login_screen.dart';
+import 'package:tawseel/screens/vendor_screen.dart';
+import 'package:tawseel/screens/requests.dart';
+import 'package:tawseel/screens/user_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +33,9 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/forgot-password': (context) => const ForgotPasswordScreen(),
         '/otp-verification': (context) => const OtpVerificationScreen(),
+        '/vendors': (context) => const VendorScreen(),
+        '/requests': (context) => const RequestingPage(),
+        '/profile': (context) => const UserProfileScreen(),
       },
     );
   }
