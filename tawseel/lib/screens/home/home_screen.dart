@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'home_controller.dart';
-import 'widgets/home_bottom_nav.dart';
-import 'widgets/home_drawer.dart';
 import 'widgets/home_header.dart';
 import 'widgets/home_search_bar.dart';
 import 'widgets/category_filter.dart';
@@ -28,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
-      drawer: const HomeDrawer(),
       body: SafeArea(
         child: Column(
           children: [
@@ -56,10 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: HomeBottomNav(
-        currentIndex: _controller.selectedNavIndex,
-        onTap: (index) => setState(() => _controller.selectedNavIndex = index),
       ),
     );
   }

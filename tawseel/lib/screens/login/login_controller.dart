@@ -13,6 +13,9 @@ class LoginController {
     if (value == null || value.isEmpty) {
       return 'Please enter your email or phone number';
     }
+    if (!value.contains('@')) {
+      return 'Please enter a valid email containing @';
+    }
     return null;
   }
 

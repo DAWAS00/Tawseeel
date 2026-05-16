@@ -14,10 +14,9 @@ class HomeBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> navItems = [
       {'icon': Icons.home_rounded, 'label': 'Home'},
-      {'icon': Icons.search, 'label': 'Search'},
+      {'icon': Icons.shopping_cart_outlined, 'label': 'Cart'},
       {'icon': Icons.store_outlined, 'label': 'Vendors'},
-      {'icon': Icons.map_outlined, 'label': 'Map'},
-      {'icon': Icons.settings_outlined, 'label': 'Settings'},
+      {'icon': Icons.person_outline, 'label': 'Profile'},
     ];
 
     return Container(

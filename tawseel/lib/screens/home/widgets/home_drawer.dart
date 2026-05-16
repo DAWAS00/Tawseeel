@@ -34,8 +34,8 @@ class HomeDrawer extends StatelessWidget {
             onTap: () => Navigator.pop(context),
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            leading: const Icon(Icons.person_outline),
+            title: const Text('Profile'),
             onTap: () => Navigator.pop(context),
           ),
         ],
