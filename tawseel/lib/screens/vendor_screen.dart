@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'vendor_detail/vendor_detail_page.dart';
 
 final List<Map<String, dynamic>> vendors = [
   {
@@ -332,11 +333,17 @@ class _VendorScreenState extends State<VendorScreen> {
                         tag: vendor['tag'] as String?,
                         tagColor: vendor['tagColor'] as Color?,
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Opening ${vendor['name']}...'),
-                              duration: const Duration(seconds: 1),
-                              backgroundColor: const Color(0xFF1A73E8),
+                          // Navigate to the vendor's menu page when the user taps a card
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VendorDetailPage(
+                                vendorName: vendor['name'] as String,
+                                category: vendor['category'] as String,
+                                imageUrl: vendor['imageUrl'] as String,
+                                rating: vendor['rating'] as double,
+                                deliveryTime: vendor['time'] as String,
+                              ),
                             ),
                           );
                         },
