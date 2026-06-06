@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RegisterController {
   // Shared Fields
@@ -12,12 +13,12 @@ class RegisterController {
   final businessNameController = TextEditingController();
   final addressController = TextEditingController();
   final googleMapsController = TextEditingController();
-  
+
   // Payment Information
   final cardNumberController = TextEditingController();
   final expiryController = TextEditingController();
   final cvvController = TextEditingController();
-  
+
   // Account Details (Shop Owner)
   String? selectedCategory;
   String? selectedCity;
@@ -79,16 +80,61 @@ class RegisterController {
     return null;
   }
 
-  void register(BuildContext context, {required bool acceptedTerms, required bool isCustomer}) {
+  Future<void> register(
+    BuildContext context, {
+    required bool acceptedTerms,
+    required bool isCustomer,
+  }) async {
     if (!acceptedTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please accept the Terms & Conditions')),
       );
       return;
     }
-    if (formKey.currentState!.validate()) {
-      // Logic would differ here based on isCustomer, but for now both go home
-      Navigator.pushReplacementNamed(context, '/home');
+    if (!formKey.currentState!.validate()) return;
+
+    try {
+      final response = await Supabase.instance.client.auth.signUp(
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      );
+
+      final user = response.user;
+      if (user == null) return;
+
+      await Supabase.instance.client.from('profiles').insert({
+        'id': user.id,
+        'name': nameController.text.trim(),
+        'phone': '+962${phoneController.text.trim()}',
+        'role': isCustomer ? 'customer' : 'vendor',
+      });
+
+      if (!isCustomer) {
+        await Supabase.instance.client.from('vendors').insert({
+          'id': user.id,
+          'business_name': businessNameController.text.trim(),
+          'address': addressController.text.trim(),
+          'google_maps_link': googleMapsController.text.trim(),
+          'category': selectedCategory,
+          'city': selectedCity,
+        });
+      }
+
+      if (context.mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } on AuthException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message)),
+        );
+      }
+    } on PostgrestException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message)),
+        );
+      }
     }
   }
 

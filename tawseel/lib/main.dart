@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tawseel/core/supabase_config.dart';
 import 'package:tawseel/screens/login_screen.dart';
 import 'package:tawseel/screens/register_screen.dart';
 import 'package:tawseel/screens/splash_screen.dart';
@@ -9,7 +11,12 @@ import 'package:tawseel/screens/login/merchant_login_screen.dart';
 import 'package:tawseel/screens/requests.dart';
 import 'package:tawseel/screens/user_profile.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: SupabaseConfig.url,
+    anonKey: SupabaseConfig.anonKey,
+  );
   runApp(const MyApp());
 }
 

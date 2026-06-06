@@ -29,6 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
   bool _acceptedTerms = true;
+  bool _isLoading = false;
   int _strengthSegments = 0;
 
   @override
@@ -480,7 +481,17 @@ class _RegisterFormState extends State<RegisterForm> {
 
   Widget _createAccountButton() {
     return ElevatedButton(
-      onPressed: () => widget.controller.register(context, acceptedTerms: _acceptedTerms, isCustomer: _isCustomer),
+      onPressed: _isLoading
+          ? null
+          : () async {
+              setState(() => _isLoading = true);
+              await widget.controller.register(
+                context,
+                acceptedTerms: _acceptedTerms,
+                isCustomer: _isCustomer,
+              );
+              if (mounted) setState(() => _isLoading = false);
+            },
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
@@ -488,10 +499,16 @@ class _RegisterFormState extends State<RegisterForm> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 0,
       ),
-      child: Text(
-        'Create Account',
-        style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),
-      ),
+      child: _isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+            )
+          : Text(
+              'Create Account',
+              style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
     );
   }
 

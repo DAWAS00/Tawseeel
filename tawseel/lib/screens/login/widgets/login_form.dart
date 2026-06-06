@@ -15,6 +15,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,13 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _buildSignInButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => widget.controller.login(context),
+      onPressed: _isLoading
+          ? null
+          : () async {
+              setState(() => _isLoading = true);
+              await widget.controller.login(context);
+              if (mounted) setState(() => _isLoading = false);
+            },
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
@@ -118,13 +125,16 @@ class _LoginFormState extends State<LoginForm> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 0,
       ),
-      child: Text(
-        'Sign In',
-        style: GoogleFonts.cairo(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child: _isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+            )
+          : Text(
+              'Sign In',
+              style: GoogleFonts.cairo(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
     );
   }
 }

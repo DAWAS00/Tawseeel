@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'profile/edit_profile_page.dart';
 import 'profile/orders_page.dart';
 import 'profile/payment_page.dart';
@@ -34,12 +35,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false); // Navigate to login
+            onPressed: () async {
+              Navigator.pop(context);
+              await Supabase.instance.client.auth.signOut();
+              if (context.mounted) {
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              }
             },
-            child: const Text('Log Out',
-                style: TextStyle(color: Colors.red)),
+            child: const Text('Log Out', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
