@@ -282,26 +282,34 @@ class CartScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.grey)),
           ),
 
-          // Confirm — save the order and clear the cart
+          // Confirm — save the order to Supabase and clear the cart
           ElevatedButton(
-            onPressed: () {
-              // Save the current cart as a PlacedOrder in OrderService
-              OrderService.instance.placeOrder(
-                CartService.instance.items.toList(),
-                CartService.instance.total,
-              );
+            onPressed: () async {
+              final items = CartService.instance.items.toList();
+              final total = CartService.instance.total;
 
-              // Empty the cart now that the order has been placed
-              CartService.instance.clearCart();
-
-              // Close the dialog
               Navigator.pop(dialogContext);
 
-              // Show a success message to the user
+              // Returns null on success, or an error message string
+              final error = await OrderService.instance.placeOrder(items, total);
+
+              if (error != null) {
+                // Show the actual error so we know what went wrong
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Order failed: $error'),
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+                return;
+              }
+
+              CartService.instance.clearCart();
+
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text(
-                      'Order placed! Check My Orders in your profile.'),
+                  content: Text('Order placed! Check My Orders in your profile.'),
                   backgroundColor: Colors.green,
                   behavior: SnackBarBehavior.floating,
                 ),

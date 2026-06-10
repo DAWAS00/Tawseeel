@@ -19,6 +19,13 @@ class LoginController {
   }
 
   Future<void> login(BuildContext context) async {
+    // TODO: remove bypass before production — skips Supabase auth for testing
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, '/home');
+    }
+    return;
+
+    // ignore: dead_code
     if (!formKey.currentState!.validate()) return;
     try {
       await Supabase.instance.client.auth.signInWithPassword(

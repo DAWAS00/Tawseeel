@@ -1,16 +1,29 @@
-// PlacedOrder represents a completed order that the user submitted.
-// Once an order is placed, it is saved here so it shows up in "My Orders".
+// PlacedOrder represents a completed order saved in Supabase.
 
 class PlacedOrder {
-  final String id;              // Unique order ID (we use a timestamp)
-  final List<String> itemLines; // Each item as a readable string, e.g. "Burger x2"
-  final double total;           // Total amount paid
-  final DateTime placedAt;      // When the order was placed
+  final String id;
+  final List<String> itemLines;
+  final double total;
+  final String status;
+  final DateTime placedAt;
 
   PlacedOrder({
     required this.id,
     required this.itemLines,
     required this.total,
+    required this.status,
     required this.placedAt,
   });
+
+  // Create a PlacedOrder from a Supabase row (a Map of column → value)
+  factory PlacedOrder.fromMap(Map<String, dynamic> map) {
+    return PlacedOrder(
+      id: map['id'] as String,
+      // Supabase returns text[] as a List — cast each element to String
+      itemLines: List<String>.from(map['items'] as List),
+      total: (map['total'] as num).toDouble(),
+      status: map['status'] as String? ?? 'pending',
+      placedAt: DateTime.parse(map['created_at'] as String),
+    );
+  }
 }
